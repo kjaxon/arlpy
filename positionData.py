@@ -1,7 +1,12 @@
 import arlpy.uwapm as pm
 import arlpy.plot as plt
 import numpy as np
+import pandas as pd
+from os import write
+from pandas.core.series import Series
 
+# with open("eigenValues.txt", 'r+') as f:
+#     f.truncate(0)
 
 bathy = [
     [0, 30],    # 30 m water depth at the transmitter
@@ -35,8 +40,14 @@ pm.print_env(env)
 
 erays = pm.compute_eigenrays(env)
 rays = pm.compute_rays(env, debug=True)
-print(erays.ray)
-open("/eigenValues.txt", 'w+')
 
+df = pd.DataFrame.empty
+df = erays
+
+buffer = pd.DataFrame.to_csv(df)
+
+data = open("eigenValues.txt", "w+")
+# data.write(eigens)
+data.write(buffer)
 #print(rays)
 #pm.plot_rays(erays, env=env, width=1000)
